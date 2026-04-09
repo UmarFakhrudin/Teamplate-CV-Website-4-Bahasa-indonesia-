@@ -60,25 +60,39 @@ const profile = {
   ],
   experience: [
     {
+      company: "VIRTUAL VIBE STUDIO",
+      role: "Creative Director",
+      period: "2023 - Sekarang",
+      location: "Jakarta (Remote)",
+      description: "Mengarahkan visi kreatif untuk kampanye digital global. Mengelola tim multidisiplin yang terdiri dari desainer, copywriter, dan videografer untuk menghasilkan konten yang memenangkan penghargaan industri."
+    },
+    {
       company: "CREATIVE HUB INDONESIA",
       role: "Senior Visual Designer",
-      period: "2022 - Sekarang",
+      period: "2021 - 2023",
       location: "Jakarta",
       description: "Memimpin tim kreatif dalam pembuatan konten visual untuk kampanye pemasaran digital berskala nasional. Bertanggung jawab atas konsistensi brand dan inovasi desain."
     },
     {
       company: "DIGITAL PULSE AGENCY",
-      role: "Content Creator & Copywriter",
-      period: "2020 - 2022",
+      role: "Lead Copywriter",
+      period: "2019 - 2021",
       location: "Bandung",
-      description: "Menyusun strategi konten dan menulis copy yang persuasif untuk berbagai platform media sosial klien korporat. Meningkatkan engagement rate hingga 40%."
+      description: "Menyusun strategi konten dan menulis copy yang persuasif untuk berbagai platform media sosial klien korporat. Meningkatkan engagement rate hingga 40% melalui pendekatan storytelling yang unik."
     },
     {
       company: "TECH NOVA SOLUTIONS",
       role: "Junior Graphic Designer",
-      period: "2018 - 2020",
+      period: "2018 - 2019",
       location: "Jakarta",
       description: "Mendukung departemen pemasaran dalam pembuatan aset visual harian, termasuk banner web, infografis, dan materi promosi cetak."
+    },
+    {
+      company: "PIXEL PERFECT DESIGN",
+      role: "Graphic Designer Intern",
+      period: "2017 - 2018",
+      location: "Jakarta",
+      description: "Membantu dalam pengembangan identitas visual brand baru dan melakukan retouching foto produk untuk katalog e-commerce."
     }
   ],
   education: [
@@ -237,9 +251,10 @@ const Navbar = ({ theme, toggleTheme }: { theme: string, toggleTheme: () => void
 const SectionHeading = ({ children, subtitle, center = false }: { children: React.ReactNode, subtitle?: string, center?: boolean }) => (
   <div className={`mb-16 ${center ? 'text-center flex flex-col items-center' : ''}`}>
     <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      whileInView={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0, scale: 0.9, y: 10 }}
+      whileInView={{ opacity: 1, scale: 1, y: 0 }}
       viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
       className="inline-block px-4 py-1.5 rounded-full bg-brand-500/10 text-brand-500 text-xs font-black tracking-widest uppercase mb-4 border border-brand-500/20"
     >
       {children}
@@ -248,6 +263,7 @@ const SectionHeading = ({ children, subtitle, center = false }: { children: Reac
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: 0.1 }}
       className="text-4xl md:text-6xl font-display font-black mb-6 leading-tight tracking-tight"
     >
       {subtitle}
@@ -256,11 +272,26 @@ const SectionHeading = ({ children, subtitle, center = false }: { children: Reac
       initial={{ width: 0 }}
       whileInView={{ width: 100 }}
       viewport={{ once: true }}
-      transition={{ delay: 0.2, duration: 0.8 }}
+      transition={{ delay: 0.3, duration: 0.8 }}
       className="h-2 bg-brand-500 rounded-full"
     />
   </div>
 );
+
+const fadeInUp = {
+  initial: { opacity: 0, y: 30 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6 }
+};
+
+const staggerContainer = {
+  initial: {},
+  animate: {
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
 
 export default function App() {
   const [theme, setTheme] = useState('dark');
@@ -299,7 +330,12 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen mesh-gradient-v2 font-sans overflow-x-hidden">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+      className="min-h-screen mesh-gradient-v2 font-sans overflow-x-hidden"
+    >
       <CursorFollower />
       <motion.div className="fixed top-0 left-0 right-0 h-1 bg-brand-500 z-[60] origin-left" style={{ scaleX }} />
       <Navbar theme={theme} toggleTheme={toggleTheme} />
@@ -307,15 +343,30 @@ export default function App() {
       {/* Hero Section */}
       <header className="relative pt-32 pb-20 md:pt-56 md:pb-40 overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full -z-10 overflow-hidden">
-          <div className="absolute top-[-10%] right-[-10%] w-[70%] h-[70%] bg-brand-600/20 rounded-full blur-[140px] animate-pulse-slow" />
-          <div className="absolute bottom-[-10%] left-[-10%] w-[60%] h-[60%] bg-accent-pink/15 rounded-full blur-[120px] animate-pulse-slow" />
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.1, 1],
+              rotate: [0, 5, 0],
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-[-10%] right-[-10%] w-[70%] h-[70%] bg-brand-600/20 rounded-full blur-[140px]" 
+          />
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.2, 1],
+              rotate: [0, -5, 0],
+            }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute bottom-[-10%] left-[-10%] w-[60%] h-[60%] bg-accent-pink/15 rounded-full blur-[120px]" 
+          />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center text-center">
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, scale: 0.8, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
               className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-brand-500/10 border border-brand-500/20 mb-10"
             >
               <span className="relative flex h-3 w-3">
@@ -326,25 +377,38 @@ export default function App() {
             </motion.div>
 
             <motion.h1 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
               className="text-6xl md:text-9xl font-display font-black leading-[0.85] mb-10 tracking-tighter"
             >
               Visualisasi <br />
-              <span className="text-gradient-vibrant">Kesempurnaan.</span>
+              <motion.span 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5, duration: 0.8 }}
+                className="text-gradient-vibrant inline-block"
+              >
+                Kesempurnaan.
+              </motion.span>
             </motion.h1>
             
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
               className="text-xl md:text-3xl text-slate-400 font-medium mb-12 max-w-3xl leading-relaxed"
             >
               Halo, saya <span className="text-brand-500 font-black">{profile.name}</span>, 
               seorang <span className="text-accent-pink font-black italic">{profile.title}</span> yang berdedikasi menciptakan karya digital berdampak tinggi.
             </motion.p>
 
-            <div className="flex flex-wrap justify-center gap-6">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+              className="flex flex-wrap justify-center gap-6"
+            >
               <motion.a 
                 whileHover={{ scale: 1.05, y: -4 }}
                 whileTap={{ scale: 0.95 }}
@@ -354,7 +418,7 @@ export default function App() {
                 Mulai Proyek
                 <ChevronRight size={24} />
               </motion.a>
-              <motion.div className="flex gap-4">
+              <div className="flex gap-4">
                 <motion.button 
                   whileHover={{ scale: 1.05, y: -4 }}
                   whileTap={{ scale: 0.95 }}
@@ -373,8 +437,8 @@ export default function App() {
                   <ImageIcon size={20} className="text-accent-pink" />
                   Unduh JPG
                 </motion.button>
-              </motion.div>
-            </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </header>
@@ -449,14 +513,18 @@ export default function App() {
             Keahlian
           </SectionHeading>
           
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <motion.div 
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
             {profile.skills.map((skill, index) => (
               <motion.div
                 key={skill.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
+                variants={fadeInUp}
+                whileHover={{ y: -10, transition: { duration: 0.3 } }}
                 className="bento-card-v2 group relative overflow-hidden p-8 rounded-[3rem]"
               >
                 <div className="flex items-center justify-between mb-10">
@@ -479,7 +547,7 @@ export default function App() {
                 </div>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -490,13 +558,18 @@ export default function App() {
             Pengalaman Kerja
           </SectionHeading>
 
-          <div className="space-y-8">
+          <motion.div 
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            className="space-y-8"
+          >
             {profile.experience.map((exp, index) => (
               <motion.div
                 key={exp.company + exp.period}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
+                variants={fadeInUp}
+                whileHover={{ scale: 1.01, transition: { duration: 0.2 } }}
                 className="bento-card-v2 p-10 rounded-[3rem]"
               >
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
@@ -521,7 +594,48 @@ export default function App() {
                 </div>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Education Section */}
+      <section id="education" className="py-32 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeading center subtitle="Latar belakang akademis saya.">
+            Pendidikan
+          </SectionHeading>
+
+          <motion.div 
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            className="grid md:grid-cols-2 gap-8"
+          >
+            {profile.education.map((edu, index) => (
+              <motion.div
+                key={edu.school + edu.period}
+                variants={fadeInUp}
+                whileHover={{ y: -10, transition: { duration: 0.3 } }}
+                className="bento-card-v2 p-10 rounded-[3rem] relative overflow-hidden group"
+              >
+                <div className="absolute top-0 right-0 w-32 h-32 bg-brand-500/5 rounded-bl-[4rem] -z-10 group-hover:bg-brand-500/10 transition-colors" />
+                <div className="flex items-center gap-4 mb-6">
+                  <GraduationCap size={32} className="text-brand-500" />
+                  <span className="px-4 py-1 rounded-full bg-brand-500/10 text-brand-500 text-xs font-black uppercase tracking-widest border border-brand-500/20">
+                    {edu.period}
+                  </span>
+                </div>
+                <h3 className="text-3xl font-display font-black mb-2">{edu.school}</h3>
+                <p className="text-xl font-bold text-accent-pink mb-4">{edu.major}</p>
+                <div className="flex items-center gap-2 text-slate-500 font-bold mb-4">
+                  <MapPin size={16} />
+                  {edu.location}
+                </div>
+                <p className="text-lg font-medium text-slate-400">{edu.status}</p>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
@@ -544,15 +658,22 @@ export default function App() {
                     { icon: <Phone size={24} />, label: 'WhatsApp', value: profile.contact.phone, color: 'text-accent-pink' },
                     { icon: <MapPin size={24} />, label: 'Lokasi', value: profile.contact.location, color: 'text-accent-cyan' }
                   ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-6">
-                      <div className={`w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center border border-white/5 ${item.color}`}>
+                    <motion.div 
+                      key={i} 
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.1 }}
+                      className="flex items-center gap-6 group"
+                    >
+                      <div className={`w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center border border-white/5 ${item.color} group-hover:scale-110 transition-transform`}>
                         {item.icon}
                       </div>
                       <div>
                         <p className="text-xs font-black text-slate-500 uppercase tracking-widest mb-1">{item.label}</p>
                         <p className="text-xl font-bold">{item.value}</p>
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </div>
@@ -640,6 +761,6 @@ export default function App() {
           </div>
         </div>
       </footer>
-    </div>
+    </motion.div>
   );
 }
